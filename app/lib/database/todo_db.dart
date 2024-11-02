@@ -6,15 +6,15 @@ import 'package:sqflite/sqflite.dart';
   final tableName = 'todos';
 
   Future <void> createTable(Database database) async {
-    await database.execute("""
+    await database.execute('''
       CREATE TABLE IF NOT EXISTS $tableName (
         "id" INTEGER NOT NULL,
         "title" TEXT NOT NULL,
-        "created_at" INTEGER NOT DEFAULT (cast(strftime('%s', 'now') as integer)),
+        "created_at" INTEGER NOT NULL DEFAULT (cast(strftime('%s', 'now') as integer)),
         "updated_at" INTEGER,
         PRIMARY KEY ("id" AUTOINCREMENT)
       );
-    """);
+    ''');
   }
 
   Future <int> create ({required String title}) async {
