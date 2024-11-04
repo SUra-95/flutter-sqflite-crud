@@ -17,10 +17,10 @@ import 'package:sqflite/sqflite.dart';
     ''');
   }
 
-  Future <int> create ({required String title}) async {
+  Future <void> create ({required String title}) async {
     final database = await DatabaseService().database;
 
-    return await database.rawInsert(
+     await database.rawInsert(
       '''INSERT INTO $tableName (title, created_at) VALUES (?,?)''',
       [title, DateTime.now().millisecondsSinceEpoch],
     );
@@ -40,15 +40,15 @@ import 'package:sqflite/sqflite.dart';
       return Todo.fromSqfliteDatabase(todo.first);
   }
 
-  Future <int> update ({required int id, String? title}) async {
+  Future <void> update ({required int id, String? title}) async {
     final database = await DatabaseService().database;
-    return await database.update(tableName,
+     await database.update(tableName,
       {
         if (title != null) 'title' : title,
         'updated_at' : DateTime.now().millisecondsSinceEpoch,
       },
       where: 'id = ?',
-      conflictAlgorithm: ConflictAlgorithm.rollback,
+      // conflictAlgorithm: ConflictAlgorithm.rollback,
       whereArgs: [id],
     );
   }
